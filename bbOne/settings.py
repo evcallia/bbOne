@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.practiceBlackBelt',
     'apps.beltOne',
     'django.contrib.admin',
     'django.contrib.auth',

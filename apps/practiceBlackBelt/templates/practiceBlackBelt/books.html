@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Books</title>
+    </head>
+    <body>
+        <div id="header">
+            <h3>Welcome, {{user.alias}}</h3>
+            <a href="{% url 'belt:books_add' %}">Add Book and Review</a>
+            <a href="{% url 'belt:logout' %}">Logout</a>
+        </div>
+        <div id="first_three" style="float: left; margin-right: 200px;">
+            <h3>Recent Book Reviews:</h3>
+            {% for review in recents %}
+                <h3><a href="{% url 'belt:show_book' id=review.book.id %}">{{review.book.title}}</a></h3>
+                <p>Rating:
+                    {% load staticfiles %}
+                    {% for i in 'xxxxx' %}
+                        {% if forloop.counter0 < review.rating %}
+                            <img style="width: 30px; height: auto;"src="{% static 'practiceBlackBelt/images/yellow_star.png' %}" alt="filled_star" />
+                        {% else %}
+                            <img style="width: 30px; height: auto;" src="{% static 'practiceBlackBelt/images/empty_star.png' %}" alt="empty_star" />
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p><a href="{% url 'belt:show_user' id=review.user.id %}">{{review.user.alias}}</a> says: {{review.review}}</p>
+            {% endfor %}
+        </div>
+        <div id="other_books">
+            <h3>Other Books with Reviews:</h3>
+            <div style="float: left; overflow-y: auto; width: 300px; height: 150px; border: black solid 3px;">
+                <!-- <textarea readonly rows="8" cols="40"> -->
+                {% for book in books %}
+                    <a style="display: block;" href="{% url 'belt:show_book' id=book.id %}">{{book.title}}</a>
+                {% endfor %}
+                <!-- </textarea> -->
+            </div>
+        </div>
+    </body>
+</html>
