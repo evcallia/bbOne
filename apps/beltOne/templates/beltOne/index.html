@@ -2,9 +2,68 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>Your Trips</title>
+        <style>
+            th,td{
+                width: 200px;
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h3><a href="{% url 'belt:logout' %}">Logout</a></h3>
+        <h2>Hello, {{user.name}}</h2>
+        <h4>Your Trip Schedules</h4>
+        <table>
+            <tr>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Plan</th>
+            </tr>
+            {% if user_trips.exists %}
+                {% for trip in user_trips %}
+                    <tr>
+                        <td><a href="{% url 'belt:show' id=trip.id %}">{{trip.destination}}</a></td>
+                        <td>{{trip.start_date}}</td>
+                        <td>{{trip.end_date}}</td>
+                        <td>{{trip.description}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            {% if joined_trips.exists %}
+                {% for trip in joined_trips %}
+                    <tr>
+                        <td><a href="{% url 'belt:show' id=trip.trip.id %}">{{trip.trip.destination}}</a></td>
+                        <td>{{trip.trip.start_date}}</td>
+                        <td>{{trip.trip.end_date}}</td>
+                        <td>{{trip.trip.description}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <br><br>
+        <h4>Other User's Travel Plans</h4>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Do You Want to Join?</th>
+            </tr>
+            {% if other_trips.exists %}
+                {% for trip in other_trips %}
+                    <tr>
+                        <td>{{trip.planned_by.name}}</td>
+                        <td><a href="{% url 'belt:show' id=trip.id %}">{{trip.destination}}</a></td>
+                        <td>{{trip.start_date}}</td>
+                        <td>{{trip.end_date}}</td>
+                        <td><a href="{% url 'belt:join' id=trip.id %}">Join</a></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <h3><a href="{% url 'belt:add' %}">Add Travel Plan</a></h3>
     </body>
 </html>

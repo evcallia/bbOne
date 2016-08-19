@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Add a Trip!</title>
+    </head>
+    <body>
+        <h3><a href="{% url 'belt:travels' %}">Home</a></h3>
+        <h3><a href="{% url 'belt:logout' %}">Logout</a></h3>
+        <h2>Add a Trip</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'belt:add' %}" method="post">
+            {% csrf_token %}
+            <label>Destination:<input type="text" name="destination"></label><br>
+            <label>Description:<input type="text" name="description"></label><br>
+            <label>Travel Date From:<input type="date" name="start_date"></label><br>
+            <label>Trabel Date To:<input type="date" name="end_date"></label><br>
+            <input type="submit" value="Add">
+        </form>
+    </body>
+</html>

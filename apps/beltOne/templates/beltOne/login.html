@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div class="register">
+            <h1>Welcome!</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            <h2>Register</h2>
+            <form action="{% url 'belt:proc_login' %}" method="POST">
+                {% csrf_token %}
+                <label>Name:<input type="text" name="name"></label><br>
+                <label>Username:<input type="text" name="username"></label><br>
+                <label>Password:<input type="password" name="password"></label><br>
+                <p style="font-size: 10px;">*Password should be at least 8 characters</p>
+                <label>Password Confirmation:<input type="password" name="password_confirmation"></label><br>
+                <input type="hidden" name="type" value="register">
+                <input type="submit" value="register">
+            </form>
+        </div>
+        <div class="login">
+            <h2>Sign In</h2>
+            <form action="{% url 'belt:proc_login' %}" method="post">
+                {% csrf_token %}
+                <label>UserName: <input type="text" name="username"></label><br>
+                <label>Password: <input type="password" name="password"></label><br>
+                <input type="hidden" name="type" value="login">
+                <input type="submit" value="Sign In">
+            </form>
+        </div>
+    </body>
+</html>
