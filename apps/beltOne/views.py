@@ -20,19 +20,17 @@ def proc_login(request):
 
 def travels(request):
     context = Trip.objects.getTrips(request)
-    print context['other_trips']
     return render(request, 'beltOne/index.html', context)
 
 def add(request):
     if request.method == 'POST':
         #process add
         if Trip.objects.add(request):
-            print 'made it'
             return(redirect(reverse('belt:travels')))
     return render(request, 'beltOne/add.html')
 
 def join(request, id):
-    trip = User_Trip.objects.create(user=User.objects.get(id=request.session['id']), trip=Trip.objects.get(id=id))
+    Trip.objects.join(request, id)
     return redirect(reverse('belt:travels'))
 
 def show(request, id):

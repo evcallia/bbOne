@@ -105,7 +105,17 @@ class tripManager(models.Manager):
                 no_error = False
         return no_error
 
-
+    def join(self, request, id):
+        context = self.getTrips(request)
+        my_trip = Trip.objects.get(id=id)
+        can_join = True
+        for trip in context['joined_trips']:
+            if my_trip == trip.trip:
+                can_join = False
+        if can_join:
+            User_Trip.objects.create(user=User.objects.get(id=request.session['id']), trip=Trip.objects.get(id=id))
+        else:
+            messages.error(request, "You've already joined this trip!")
 
     def getTrips(self, request):
         user = User.objects.get(id=request.session['id'])
