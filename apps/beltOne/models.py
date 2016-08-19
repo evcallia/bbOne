@@ -115,18 +115,6 @@ class tripManager(models.Manager):
             joined_trips = []
 
         other_trips = Trip.objects.all().exclude(planned_by=user)
-        # actual_others = []
-        # if len(joined_trips) > 0:
-        #     for trip in other_trips:
-        #         for my_trip in joined_trips:
-        #             # print my_trip
-        #             if trip == my_trip.trip:
-        #                 pass
-        #             else:
-        #                 actual_others.append(trip)
-        # else:
-        #     for trip in other_trips:
-        #         actual_others.append(trip)
 
 
         context = {
